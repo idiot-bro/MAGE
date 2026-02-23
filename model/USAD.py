@@ -71,7 +71,7 @@ def train_usad(model, dataloader, epochs=50, lr=1e-3, device="cpu"):
             # AE2(AE1(x))
             x12 = model.forward_ae2_on_ae1(x)
 
-            # 损失（论文公式）
+
             loss_ae1 = (1 / epoch) * mse(x, x1) + (1 - 1 / epoch) * mse(x, x12)
             loss_ae2 = (1 / epoch) * mse(x, x2) - (1 - 1 / epoch) * mse(x, x12)
 
@@ -87,4 +87,5 @@ def train_usad(model, dataloader, epochs=50, lr=1e-3, device="cpu"):
 
 if __name__ == '__main__':
     pass
+
 
