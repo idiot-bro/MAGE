@@ -12,7 +12,7 @@ class VectorQuantizer(nn.Module):
 
     def forward(self, z_e):
         flat = z_e.permute(0,2,3,1).contiguous().view(-1, z_e.size(1))
-        # 最近邻
+
         dists = (flat**2).sum(1, keepdim=True) - 2*flat @ self.codebook.weight.t() + \
                 (self.codebook.weight**2).sum(1)
         idx = dists.argmin(1)
@@ -118,3 +118,4 @@ class SAnoDDPM:
 if __name__ == '__main__':
 
     pass
+
