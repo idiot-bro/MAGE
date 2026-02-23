@@ -70,7 +70,7 @@ if __name__ == '__main__':
     cae = ConvAutoencoder(input_len=198)
     cae.load_state_dict(torch.load('cae.pth'))
     clf = FCClassifier(cae, latent_dim=64 * (198 // 8), num_classes=2)
-    # 仅训练分类头
+
     optimizer = torch.optim.Adam(clf.fc1.parameters(), lr=1e-3)
     criterion = nn.NLLLoss()
     for epoch in range(100):
@@ -80,3 +80,4 @@ if __name__ == '__main__':
             optimizer.zero_grad();
             loss.backward();
             optimizer.step()
+
