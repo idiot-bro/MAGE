@@ -54,17 +54,16 @@ class ChronoNet(nn.Module):
             inp = torch.cat(feats + [x], dim=2) if i>0 else x
             out = gru(inp)  # (B, T', hidden)
             feats.append(out)
-        # 取最后时刻拼接所有层输出
         last_steps = [f[:, -1, :] for f in feats]  # list of (B, hidden)
         h = torch.cat(last_steps, dim=1)           # (B, num_gru_layers*hidden)
         logits = self.classifier(h)
         return logits
 
-# 测试
 if __name__ == "__main__":
     model = ChronoNet()
     dummy = torch.randn(8, 15000, 22)
     out = model(dummy)
     print("Output shape:", out.shape)
+
 
 
