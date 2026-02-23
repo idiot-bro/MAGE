@@ -13,7 +13,7 @@ class ImprovedLocalMemoryLayer(nn.Module):
         self.fea_dim = fea_dim
         self.temperature = temperature
         self.std = 1.0 / math.sqrt(self.fea_dim)
-        # 内存权重
+    
         self.weight = nn.Parameter(
             torch.empty(self.fea_dim, self.mem_dim, device=device).uniform_(-self.std, self.std)
         ) # shape: (500, 64)
@@ -682,7 +682,7 @@ class MAGE(nn.Module):
                  decoder_kernel_sizes = ((4, 4), (3, 3), (3, 3), (2, 5)), strides = ((2, 2), (1, 1), (2, 2), (1, 1)), paddings = (1, 1, 1, 0),
                  global_mem_dim = 500, local_mem_dim = 500, fc_dim = 8*128, momentum = 0.93, lambda1 = 1.0, lambda2 = 0.0002, device='cpu'):
         super(MAGE, self).__init__()
-        # 编码器
+
         self.encoder = Encoder(trans, filter_size1, filter_size2)
         # self.encoder = TransformerEncoder()
         # self supervision
@@ -742,5 +742,6 @@ if __name__ == '__main__':
                  device='cpu')
     data = torch.randn(10, 7, 1, 257, 12)
     result = mage(data)
+
 
 
