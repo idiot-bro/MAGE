@@ -47,7 +47,6 @@ if __name__ == '__main__':
         return data_reshape.float()
 
 
-    # 训练模型
     def train_model(model, x, num_epochs=100, batch_size=32, learning_rate=0.001):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         model.to(device)
@@ -74,7 +73,6 @@ if __name__ == '__main__':
         return model
 
 
-    # 计算重建误差阈值
     def calculate_threshold(model, x_train, batch_size=32, q=0.98):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         x_train = x_train.permute(0, 2, 1).to(device)
@@ -96,7 +94,6 @@ if __name__ == '__main__':
         return threshold.item()
 
 
-    # 进行异常检测
     def detect_anomalies(model, data, threshold, batch_size=32):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         data = data.permute(0, 2, 1).to(device)
@@ -139,14 +136,11 @@ if __name__ == '__main__':
     batch_size = 32
 
 
-    # 创建并训练模型
     model = CNNAnomalyDetector(chs=x_train.shape[-1])
     model = train_model(model, x_train, num_epochs=100, batch_size=batch_size, learning_rate=1e-4)
 
-    # 计算阈值
     threshold = calculate_threshold(model, x_train, batch_size=batch_size, q = 0.98)
 
-    # 进行异常检测
     normal_results = detect_anomalies(model, x_test, threshold, batch_size=batch_size)
     abnormal_results = detect_anomalies(model, abnormal, threshold, batch_size=batch_size)
 
@@ -154,5 +148,6 @@ if __name__ == '__main__':
     print(f"Anomalous Data Detected as Anomalies: {abnormal_results.sum().item()} / {len(abnormal_results)}")
     print_table_result(abnormal_sum = len(abnormal_results), normal_sum = len(normal_results),
                        abnormal_true = abnormal_results.sum().item(), normal_true = normal_results.sum().item())
+
 
 
