@@ -677,10 +677,10 @@ class Decoder(nn.Module):
 
 
 class MAGE(nn.Module):
-    def __init__(self, filter_size0 = 1, filter_size1 = 32, filter_size2=64 , filter_size3 = 128, trans=7, dropout=0.5,
-                 MultiHead = False, heads = 4, temperature = 0.5, ss_output_features = 128, ss_kernel_size = (4, 4),
-                 decoder_kernel_sizes = ((4, 4), (3, 3), (3, 3), (2, 5)), strides = ((2, 2), (1, 1), (2, 2), (1, 1)), paddings = (1, 1, 1, 0),
-                 global_mem_dim = 500, local_mem_dim = 500, fc_dim = 8*128, momentum = 0.93, lambda1 = 1.0, lambda2 = 0.0002, device='cpu'):
+    def __init__(self, filter_size0 = None, filter_size1 = None, filter_size2=None , filter_size3 = None, trans=None, dropout=0.5,
+                 MultiHead = None, heads = None, temperature = 0.5, ss_output_features = None, ss_kernel_size = None,
+                 decoder_kernel_sizes = None, strides = None, paddings = None,
+                 global_mem_dim = None, local_mem_dim = None, fc_dim = 8*128, momentum = 0.93, lambda1 = 1.0, lambda2 = 0.0002, device='cpu'):
         super(MAGE, self).__init__()
 
         self.encoder = Encoder(trans, filter_size1, filter_size2)
@@ -724,7 +724,7 @@ class MAGE(nn.Module):
         n = g.shape[0]
         label = torch.tensor([i for i in range(self.trans) for _ in range(n)], device=self.device)
         # y_classes = F.one_hot(label, num_classes = self.trans).float()
-        # y_i_ = [y_classes[n * i :n * (i + 1)] for i in range(self.trans)]   # (batch, 7)  [1. 0. 0. 0. 0. 0. 0.]
+        # y_i_ = [y_classes[n * i :n * (i + 1)] for i in range(self.trans)]  
         y_i_ = label.reshape(self.trans, n) # (trans, batch)
         loss_g_ = []
         for i in range(self.trans):
@@ -736,6 +736,7 @@ class MAGE(nn.Module):
 
 if __name__ == '__main__':
     pass
+
 
 
 
