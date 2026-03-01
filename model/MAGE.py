@@ -735,13 +735,8 @@ class MAGE(nn.Module):
 
 
 if __name__ == '__main__':
-    mage = MAGE(filter_size0 = 1, filter_size1 = 32, filter_size2 = 64, filter_size3 = 128,
-                 MultiHead=False, heads=4, temperature=0.5, ss_output_features=128, ss_kernel_size=(3, 3),
-                 decoder_kernel_sizes=((4, 4), (4, 3), (4, 3), (4, 2)), strides=((2, 2), (1, 1), (2, 2), (1, 1)),
-                 paddings=(1, 1, 1, 0), global_mem_dim=500, local_mem_dim=500, fc_dim=60, momentum=0.93, lambda1=1.0, lambda2=0.0002,
-                 device='cpu')
-    data = torch.randn(10, 7, 1, 257, 12)
-    result = mage(data)
+    pass
+
 
 
 
